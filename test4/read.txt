@@ -1,0 +1,10 @@
+backend Laravel
+-composer install
+-setting .env
+-php artisan migrate
+
+ffrontend react
+- yarn install
+setting .env
+sesuaikan NEXT_PUBLIC_BASE_URL dengan url bbackend.
+run yarn dev

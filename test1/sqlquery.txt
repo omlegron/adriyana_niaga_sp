@@ -1,0 +1,2 @@
+SELECT owner_name, pod_pol, SUM(nett_amount) AS TOTAL_TAGIHAN, COUNT(owner_name) AS jumlah_pengiriman
+FROM orders WHERE pod_pol = 'MKS' GROUP BY owner_name, pod_pol HAVING Count(*) > 3 order by jumlah_pengiriman DESC;

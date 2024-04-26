@@ -1,0 +1,35 @@
+version: '3'
+services:
+  web:
+    container_name: eresda_v1
+    environment:
+    - APACHE_RUN_USER=#1000
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    ports:
+    - 8282:80
+    volumes:
+    - ./:/var/www/html
+    external_links:
+      - db_eresda_v1
+    networks:
+      - default
+      
+  database:
+    container_name: db_eresda_v1
+    image: mariadb
+    restart: always
+    ports:
+    - 33061:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=asdp_eresda
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+    volumes:
+      - ./docker/database:/var/lib/mysql
+
+networks:
+  reverseproxy_default:
+    external: true
