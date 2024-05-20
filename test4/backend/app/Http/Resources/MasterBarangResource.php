@@ -22,7 +22,7 @@ class MasterBarangResource extends JsonResource
             'nama' => $this->nama,
             'deskripsi' => $this->deskripsi,
             'status' => $this->status,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,            

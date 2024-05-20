@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Api\Master'], function () {
 
 Route::group(['namespace' => 'Api'], function () {
 	Route::resource('pesanan', 'PesananController');
+	Route::post('pesanan/batal/{id}', 'PesananController@batalData');
 });
 
 Route::group(['namespace' => 'Api'], function () {

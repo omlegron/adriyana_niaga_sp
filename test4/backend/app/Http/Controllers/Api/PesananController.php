@@ -51,12 +51,6 @@ class PesananController extends Controller
         $lebar = is_numeric(request()->barangLebar) ? request()->barangLebar : 0;         
         $tinggi = is_numeric(request()->barangTinggi) ? request()->barangTinggi : 0;         
 
-        $request['barangKubikasi'] = $panjang * $lebar * $tinggi / 1000000;
-        
-        $barangKubikasi = ($request['barangKubikasi'] == 0) ? 1 : $request['barangKubikasi'];
-
-        $request['total'] = $barangKubikasi * request()->barangJumlah;
-
         $record = Pesanan::saveData($request);
         
         $record->transaksiMany()->create([
@@ -65,6 +59,7 @@ class PesananController extends Controller
           'tanggal' => request()->tanggal,
           'noTransaksi' => 'ORD/'.$tanggal->format('m').'/'.$tanggal->format('Y').'/'.$total.'-'.$record->id,
           'total' => $request['total'],
+          'status' => $request['statusPesanan'],
         ]);
 
         return new GlobalResource('create');
@@ -106,5 +101,20 @@ class PesananController extends Controller
     {
       $item = Pesanan::destroy($id);
       return new GlobalResource('delete');
-  }
+    }
+
+    /**
+     * Batal the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function batalData($id)
+    {
+      $item = Pesanan::findOrFail($id);
+      $item->transaksiMany()->update([
+        'status' => 'Failed'
+      ]);
+      return new GlobalResource('update');
+    }
 }
